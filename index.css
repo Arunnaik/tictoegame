@@ -9,6 +9,7 @@
     border: '1px solid red';
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .lightBackground {
@@ -49,4 +50,23 @@
     font-size: 2.5em;
     border-radius: 5px;
     line-height: 100px;
+}
+#grid{
+    position: relative;
+}
+.endGame{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(201, 72, 70, 0.8509803921568627);
+    display: none;
+    
+    justify-content: center;
+    align-items: center;
+    
+}
+.endGame p{
+    color:#fff;
 }
