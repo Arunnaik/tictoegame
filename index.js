@@ -33,7 +33,6 @@ const winCombos = [
   [2, 4, 6]
 ];
 
-
 function initializeGrid() {
   for (let colIdx = 0; colIdx < GRID_LENGTH; colIdx++) {
     const tempArray = [];
@@ -100,7 +99,6 @@ function addClickHandlers() {
   for (var idx = 0; idx < boxes.length; idx++) {
     boxes[idx].addEventListener("click", onBoxClick, false);
   }
-  
 }
 function onBoxClick() {
   var rowIdx = this.getAttribute("rowIdx");
@@ -108,13 +106,12 @@ function onBoxClick() {
 
   if (typeof grid[colIdx][rowIdx] == "number") {
     turned(colIdx, rowIdx, turn);
-    if (!checkTie()) {
+    
       turned(emptySquares(), bestSpot(), aiPlayer);
-    } 
+    
   }
   renderMainGrid();
   addClickHandlers();
-  
 }
 function turned(colIdx, rowIdx, player) {
   grid[colIdx][rowIdx] = player;
@@ -122,17 +119,18 @@ function turned(colIdx, rowIdx, player) {
 
   if (gameWon) {
     gameOver(gameWon);
-  } 
-  
+  }
 }
 function gameOver(gameWon) {
-  
-  alert(`${gameWon.player} won the match`)
-  
-  document.querySelector('.endGame').style.display='flex';
-  document.getElementById('winner').innerHTML=`${gameWon.player} won the match`;
+  alert(`${gameWon.player} won the match`);
 
-  
+  document.querySelector(".endGame").style.display = "flex";
+  document.getElementById("winner").innerHTML = `${
+    gameWon.player
+  } won the match`;
+  document
+  .getElementsByClassName("endGame")[0]
+  .addEventListener("click", restart, false);
 }
 function emptySquares() {
   let b = grid.findIndex(function(o) {
@@ -140,7 +138,7 @@ function emptySquares() {
       return typeof e == "number";
     });
   });
-  console.log(b)
+  console.log(b);
   return b;
 }
 function bestSpot() {
@@ -163,40 +161,24 @@ function checkWin(player) {
 
   for (let [index, win] of winCombos.entries()) {
     if (win.every(elem => plays.indexOf(elem) > -1)) {
-     
       gameWon = { index: index, player: player };
-      console.log(gameWon)
+      console.log(gameWon);
 
       break;
     }
   }
- 
-
-  
 
   return gameWon;
 }
-function checkTie() {
-  let cells = document.querySelectorAll(".box");
-	if (emptySquares()== -1) {
-    
-		for (var i = 0; i < cells.length; i++) {
-			cells[i].style.backgroundColor = "green";
-			cells[i].removeEventListener('click', onBoxClick, false);
-		}
-	
-		return true;
-	}
-	return false;
+
+function restart() {
+  document.querySelector(".endGame").style.display = "none";
+  grid.length = 0;
+  initializeGrid();
+  renderMainGrid();
+  addClickHandlers();
 }
-function restart(){
-document.querySelector('.endGame').style.display='none';
-grid.length=0;
-initializeGrid();
-renderMainGrid();
-addClickHandlers();
-}
-document.getElementsByClassName('endGame')[0].addEventListener('click',restart,false)
+
 
 initializeGrid();
 renderMainGrid();
